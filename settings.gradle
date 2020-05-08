@@ -1,0 +1,2 @@
+rootProject.name='IMA_Demo'
+include ':app'
