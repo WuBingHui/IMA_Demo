@@ -258,6 +258,11 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+
+
+
+
+
         when (focusRequest) {
 
             AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {
