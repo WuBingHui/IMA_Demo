@@ -1,7 +1,8 @@
-package com.anthony.ima_demo
+package com.anthony.ima_demo.aotter
 
 import android.content.Context
 import android.net.Uri
+import com.anthony.ima_demo.R
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.source.ads.AdPlaybackState
