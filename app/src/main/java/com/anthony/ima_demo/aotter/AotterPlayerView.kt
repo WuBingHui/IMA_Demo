@@ -171,7 +171,7 @@ class AotterPlayerView constructor(context: Context, attrs: AttributeSet?) :
             AudioManager.AUDIOFOCUS_GAIN -> {
 
                 Log.e("FocusChangeListener", "AUDIOFOCUS_GAIN")
-                this.playerController?.volume = 100f
+
                 play()
 
             }
@@ -179,7 +179,7 @@ class AotterPlayerView constructor(context: Context, attrs: AttributeSet?) :
 
 
                 Log.e("FocusChangeListener", "AUDIOFOCUS_GAIN_TRANSIENT")
-                this.playerController?.volume = 100f
+
                 play()
 
             }
@@ -207,8 +207,7 @@ class AotterPlayerView constructor(context: Context, attrs: AttributeSet?) :
                 //這邊的CallBack代表第三方的app請求的是長時間焦點,且不會再回調AUDIOFOCUS_GAIN恢復
                 //如果要恢復播放必須使用者有明確的操作
                 //ex.按下播放扭
-                //這邊不暫廣告考慮到使用者無法針對廣告做操作 所以把音量降低
-                this.playerController?.volume = 0f
+                pause()
 
                 releaseAbandonAudioFocus()
 
