@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.anthony.ima_demo.aotter.ima.ImaActivity
+import com.anthony.ima_demo.aotter.impression.ImpressionActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -16,7 +17,6 @@ class MainActivity : AppCompatActivity() {
 
         initView()
 
-
     }
 
     private fun initView(){
@@ -28,6 +28,12 @@ class MainActivity : AppCompatActivity() {
             intent.setClass(this, ImaActivity::class.java)
             startActivity(intent)
 
+        }
+
+        impressionBtn.setOnClickListener{
+            val intent = Intent()
+            intent.setClass(this, ImpressionActivity::class.java)
+            startActivity(intent)
         }
 
 
