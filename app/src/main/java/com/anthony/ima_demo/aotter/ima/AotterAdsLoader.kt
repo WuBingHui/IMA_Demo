@@ -1,4 +1,4 @@
-package com.anthony.ima_demo.aotter
+package com.anthony.ima_demo.aotter.ima
 
 import android.content.Context
 import android.net.Uri
