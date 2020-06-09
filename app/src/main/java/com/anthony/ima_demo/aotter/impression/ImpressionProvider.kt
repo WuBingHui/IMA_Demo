@@ -18,7 +18,7 @@ class ImpressionProvider(private val view: View) {
     private var viewVisibilityPercentageCalculator: ViewVisibilityPercentageCalculator =
         ViewVisibilityPercentageCalculator()
 
-    private  var impressionRequest = ImpressionRequest()
+    private var impressionRequest = ImpressionRequest()
 
     fun impressionRequest(@Nullable impressionRequest: ImpressionRequest): ImpressionProvider {
 
@@ -28,21 +28,33 @@ class ImpressionProvider(private val view: View) {
     }
 
 
-    fun apply(){
+    fun apply() {
 
-        val rect =  Rect()
+        view.addOnAttachStateChangeListener(onAttachStateChangeListener)
 
-        view.getLocalVisibleRect(rect)
+    }
 
-        view.viewTreeObserver.addOnScrollChangedListener(onScrollChangedListener)
+    private val onAttachStateChangeListener = object : View.OnAttachStateChangeListener {
+        override fun onViewDetachedFromWindow(v: View?) {
+            Log.e("view", "view 消失在螢幕上")
 
+            view.viewTreeObserver.removeOnScrollChangedListener(onScrollChangedListener)
+        }
+
+        override fun onViewAttachedToWindow(v: View?) {
+            Log.e("view", "view 出現在螢幕上")
+            val rect = Rect()
+
+            view.getLocalVisibleRect(rect)
+
+            view.viewTreeObserver.addOnScrollChangedListener(onScrollChangedListener)
+        }
     }
 
 
     private val onScrollChangedListener = ViewTreeObserver.OnScrollChangedListener {
 
-        Log.e("view","${view.tag}-${viewVisibilityPercentageCalculator.getVisibilityPercents(view)}%")
-
+        Log.e("Scroll","${view.tag}-${viewVisibilityPercentageCalculator.getVisibilityPercents(view)}%")
 
     }
 
