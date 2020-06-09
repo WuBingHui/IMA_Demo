@@ -85,11 +85,17 @@ class ImpressionProvider(private val view: View, lifecycle: Lifecycle): Lifecycl
 
         Log.e("Lifecycle","pause")
 
+        impressionCountDownTimer.stop()
+
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private fun resume(){
-        Log.e("Lifecycle","resume")
+
+        val percents = viewVisibilityPercentageCalculator.getVisibilityPercents(view)
+
+        impressionCountDownTimer.checkPercent(percents)
+
     }
 
 }

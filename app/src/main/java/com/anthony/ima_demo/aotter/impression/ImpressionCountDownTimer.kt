@@ -13,6 +13,8 @@ class ImpressionCountDownTimer(impressionRequest: ImpressionRequest) {
 
     private var countDownTimer: CountDownTimer? = null
 
+    private var isCountDown = false
+
     companion object {
         private const val COUNT_DOWN_INTERVAL = 1000L
     }
@@ -22,9 +24,9 @@ class ImpressionCountDownTimer(impressionRequest: ImpressionRequest) {
 
         if (percent >= startPercent) {
 
-            if(countDownTimer == null){
-
-                countDownTimer = object : CountDownTimer(dwellSeconds,
+            if (countDownTimer == null) {
+                countDownTimer = object : CountDownTimer(
+                    dwellSeconds,
                     COUNT_DOWN_INTERVAL
                 ) {
                     override fun onFinish() {
@@ -35,23 +37,32 @@ class ImpressionCountDownTimer(impressionRequest: ImpressionRequest) {
 
                         Log.e("onTick", millisUntilFinished.toString())
 
-                        dwellSeconds -= millisUntilFinished
-
                     }
                 }
+            }
 
+            if (!isCountDown) {
+                isCountDown = true
                 countDownTimer?.start()
-
             }
 
         } else {
 
-            countDownTimer?.cancel()
-
-            countDownTimer = null
+            stop()
 
         }
 
     }
+
+    fun stop() {
+
+        countDownTimer?.cancel()
+
+        isCountDown = false
+
+        countDownTimer = null
+
+    }
+
 
 }
