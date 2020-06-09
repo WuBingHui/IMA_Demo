@@ -12,8 +12,8 @@ import com.anthony.ima_demo.aotter.impression.ImpressionProvider
  * 2020/06/09 created by Anthony Wu
  * 曝光管理者
  * 該類是廣告曝光的核心類
- * 只接收view 並把 view 配發給其他職責的類做各自的職責
- * 並提供曝光成立與不成立的callback
+ * 只接收view 與 lifecycle 並把 view 與 lifecycle 配發給其他職責的類做各自的職責
+ * 提供 ImpressionListener 監聽回調
  */
 class ImpressionManager {
 

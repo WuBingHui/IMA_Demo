@@ -7,8 +7,6 @@ interface ImpressionListener {
 
     fun onImpressionSuccess()
 
-    fun onImpressionFail()
-
-    fun currentImpressionPercent(percent:Int)
+    fun onImpressionPercent(percent:Int)
 
 }

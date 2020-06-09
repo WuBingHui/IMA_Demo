@@ -14,7 +14,9 @@ import androidx.lifecycle.OnLifecycleEvent
  * 2020/06/08 created by Anthony Wu
  * 曝光提供者
  */
-class ImpressionProvider(private val view: View, lifecycle: Lifecycle): LifecycleObserver {
+class ImpressionProvider(private val view: View, lifecycle: Lifecycle) : LifecycleObserver {
+
+    private var impressionListener: ImpressionListener? = null
 
     private var viewVisibilityPercentageCalculator: ViewVisibilityPercentageCalculator =
         ViewVisibilityPercentageCalculator()
@@ -25,20 +27,20 @@ class ImpressionProvider(private val view: View, lifecycle: Lifecycle): Lifecycl
     private var impressionCountDownTimer: ImpressionCountDownTimer =
         ImpressionCountDownTimer(
             impressionRequest
+            , impressionListener
         )
 
-    init {
 
-        lifecycle.addObserver(this)
+    fun impressionListener(@Nullable impressionListener: ImpressionListener): ImpressionProvider {
 
+        this.impressionListener = impressionListener
+
+        return this
     }
 
     fun impressionRequest(@Nullable impressionRequest: ImpressionRequest): ImpressionProvider {
 
         this.impressionRequest = impressionRequest
-
-        impressionCountDownTimer =
-            ImpressionCountDownTimer(this.impressionRequest)
 
         return this
     }
@@ -48,6 +50,9 @@ class ImpressionProvider(private val view: View, lifecycle: Lifecycle): Lifecycl
 
         view.addOnAttachStateChangeListener(onAttachStateChangeListener)
 
+        impressionCountDownTimer =
+            ImpressionCountDownTimer(this.impressionRequest, impressionListener)
+
     }
 
 
@@ -56,6 +61,9 @@ class ImpressionProvider(private val view: View, lifecycle: Lifecycle): Lifecycl
             Log.e("view", "view 消失在螢幕上")
 
             view.viewTreeObserver.removeOnScrollChangedListener(onScrollChangedListener)
+
+            lifecycle.removeObserver(this@ImpressionProvider)
+
         }
 
         override fun onViewAttachedToWindow(v: View?) {
@@ -66,6 +74,9 @@ class ImpressionProvider(private val view: View, lifecycle: Lifecycle): Lifecycl
             view.getLocalVisibleRect(rect)
 
             view.viewTreeObserver.addOnScrollChangedListener(onScrollChangedListener)
+
+            lifecycle.addObserver(this@ImpressionProvider)
+
         }
     }
 
@@ -76,21 +87,25 @@ class ImpressionProvider(private val view: View, lifecycle: Lifecycle): Lifecycl
 
         impressionCountDownTimer.checkPercent(percents)
 
+        impressionListener?.onImpressionPercent(percents)
+
         Log.e("Scroll", "${view.tag}-${percents}%")
     }
 
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    private fun pause(){
+    private fun pause() {
 
-        Log.e("Lifecycle","pause")
+        Log.e("Lifecycle", "pause")
 
         impressionCountDownTimer.stop()
 
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    private fun resume(){
+    private fun resume() {
+
+        Log.e("Lifecycle", "resume")
 
         val percents = viewVisibilityPercentageCalculator.getVisibilityPercents(view)
 

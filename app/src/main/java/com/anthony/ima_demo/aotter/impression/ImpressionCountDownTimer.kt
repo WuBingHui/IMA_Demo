@@ -5,7 +5,7 @@ import android.util.Log
 import com.anthony.ima_demo.aotter.impression.ImpressionRequest
 
 
-class ImpressionCountDownTimer(impressionRequest: ImpressionRequest) {
+class ImpressionCountDownTimer(impressionRequest: ImpressionRequest,private val impressionListener:ImpressionListener?) {
 
     private var startPercent = impressionRequest.visibleRangePercent
 
@@ -30,6 +30,8 @@ class ImpressionCountDownTimer(impressionRequest: ImpressionRequest) {
                     COUNT_DOWN_INTERVAL
                 ) {
                     override fun onFinish() {
+
+                        impressionListener?.onImpressionSuccess()
 
                     }
 
@@ -61,6 +63,7 @@ class ImpressionCountDownTimer(impressionRequest: ImpressionRequest) {
         isCountDown = false
 
         countDownTimer = null
+
 
     }
 

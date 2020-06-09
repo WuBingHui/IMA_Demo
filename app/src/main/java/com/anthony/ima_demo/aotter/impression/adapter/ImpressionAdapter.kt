@@ -1,5 +1,6 @@
 package com.anthony.ima_demo.aotter.impression.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import android.widget.TextView
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ima_demo.R
+import com.anthony.ima_demo.aotter.impression.ImpressionListener
 import com.anthony.ima_demo.aotter.impression.manager.ImpressionManager
 import com.anthony.ima_demo.aotter.impression.ImpressionRequest
 
@@ -47,11 +49,24 @@ class ImpressionAdapter(private val lifecycle: Lifecycle) : RecyclerView.Adapter
            .setVisibleRangePercent(70)
            .dwellSeconds(10)
 
-
         ImpressionManager()
             .with(holder.itemView,lifecycle)
             .impressionRequest(impressionRequest)
+            .impressionListener(impressionListener)
             .apply()
+
+    }
+
+    private val impressionListener = object :ImpressionListener{
+        override fun onImpressionSuccess() {
+
+            Log.e("onImpressionSuccess","onImpressionSuccess")
+
+        }
+
+        override fun onImpressionPercent(percent: Int) {
+            Log.e("ImpressionPercent",percent.toString())
+        }
 
     }
 
@@ -63,7 +78,6 @@ class ImpressionAdapter(private val lifecycle: Lifecycle) : RecyclerView.Adapter
 
             textView.text = item
         }
-
 
     }
 
