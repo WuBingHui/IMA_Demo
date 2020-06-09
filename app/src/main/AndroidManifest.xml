@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".aotter.impression.view.ImpressionActivity"></activity>
         <activity android:name=".aotter.ima.ImaActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".aotter.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

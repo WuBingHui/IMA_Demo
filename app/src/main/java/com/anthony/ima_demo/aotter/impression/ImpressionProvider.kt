@@ -5,28 +5,40 @@ import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.annotation.Nullable
-import com.anthony.ima_demo.aotter.impression.view.ImpressionCountDownTimer
-import com.anthony.ima_demo.aotter.impression.view.ImpressionRequest
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 
 
 /**
  * 2020/06/08 created by Anthony Wu
  * 曝光提供者
  */
-class ImpressionProvider(private val view: View) {
+class ImpressionProvider(private val view: View, lifecycle: Lifecycle): LifecycleObserver {
 
     private var viewVisibilityPercentageCalculator: ViewVisibilityPercentageCalculator =
         ViewVisibilityPercentageCalculator()
 
-    private var impressionRequest = ImpressionRequest()
+    private var impressionRequest =
+        ImpressionRequest()
 
-    private var impressionCountDownTimer: ImpressionCountDownTimer = ImpressionCountDownTimer(impressionRequest)
+    private var impressionCountDownTimer: ImpressionCountDownTimer =
+        ImpressionCountDownTimer(
+            impressionRequest
+        )
+
+    init {
+
+        lifecycle.addObserver(this)
+
+    }
 
     fun impressionRequest(@Nullable impressionRequest: ImpressionRequest): ImpressionProvider {
 
         this.impressionRequest = impressionRequest
 
-        impressionCountDownTimer = ImpressionCountDownTimer(this.impressionRequest)
+        impressionCountDownTimer =
+            ImpressionCountDownTimer(this.impressionRequest)
 
         return this
     }
@@ -37,6 +49,7 @@ class ImpressionProvider(private val view: View) {
         view.addOnAttachStateChangeListener(onAttachStateChangeListener)
 
     }
+
 
     private val onAttachStateChangeListener = object : View.OnAttachStateChangeListener {
         override fun onViewDetachedFromWindow(v: View?) {
@@ -66,5 +79,17 @@ class ImpressionProvider(private val view: View) {
         Log.e("Scroll", "${view.tag}-${percents}%")
     }
 
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    private fun pause(){
+
+        Log.e("Lifecycle","pause")
+
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    private fun resume(){
+        Log.e("Lifecycle","resume")
+    }
 
 }

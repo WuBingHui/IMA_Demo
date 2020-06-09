@@ -1,4 +1,4 @@
-package com.anthony.ima_demo.aotter.impression.view
+package com.anthony.ima_demo.aotter.impression
 
 import androidx.annotation.IntRange
 

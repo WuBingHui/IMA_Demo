@@ -22,7 +22,7 @@ class ImpressionActivity : AppCompatActivity() {
 
     private fun initView(){
 
-        impressionAdapter = ImpressionAdapter()
+        impressionAdapter = ImpressionAdapter(lifecycle)
 
         val linearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

@@ -1,15 +1,15 @@
-package com.anthony.ima_demo.aotter.impression.view
+package com.anthony.ima_demo.aotter.impression
 
 import android.os.CountDownTimer
 import android.util.Log
-import com.anthony.ima_demo.aotter.impression.ImpressionProvider
+import com.anthony.ima_demo.aotter.impression.ImpressionRequest
 
 
 class ImpressionCountDownTimer(impressionRequest: ImpressionRequest) {
 
     private var startPercent = impressionRequest.visibleRangePercent
 
-    private var MILLIS_IN_FEATURE = impressionRequest.dwellSeconds * 1000L
+    private var dwellSeconds = impressionRequest.dwellSeconds * 1000L
 
     private var countDownTimer: CountDownTimer? = null
 
@@ -24,7 +24,9 @@ class ImpressionCountDownTimer(impressionRequest: ImpressionRequest) {
 
             if(countDownTimer == null){
 
-                countDownTimer = object : CountDownTimer(MILLIS_IN_FEATURE,COUNT_DOWN_INTERVAL) {
+                countDownTimer = object : CountDownTimer(dwellSeconds,
+                    COUNT_DOWN_INTERVAL
+                ) {
                     override fun onFinish() {
 
                     }
@@ -32,6 +34,8 @@ class ImpressionCountDownTimer(impressionRequest: ImpressionRequest) {
                     override fun onTick(millisUntilFinished: Long) {
 
                         Log.e("onTick", millisUntilFinished.toString())
+
+                        dwellSeconds -= millisUntilFinished
 
                     }
                 }

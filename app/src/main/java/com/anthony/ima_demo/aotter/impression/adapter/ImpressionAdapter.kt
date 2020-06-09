@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ima_demo.R
-import com.anthony.ima_demo.aotter.impression.ImpressionProvider
 import com.anthony.ima_demo.aotter.impression.manager.ImpressionManager
-import com.anthony.ima_demo.aotter.impression.view.ImpressionRequest
+import com.anthony.ima_demo.aotter.impression.ImpressionRequest
 
-class ImpressionAdapter : RecyclerView.Adapter<ImpressionAdapter.ViewHolder>() {
+class ImpressionAdapter(private val lifecycle: Lifecycle) : RecyclerView.Adapter<ImpressionAdapter.ViewHolder>() {
 
     private var impressionList = listOf<String>()
 
@@ -47,8 +47,9 @@ class ImpressionAdapter : RecyclerView.Adapter<ImpressionAdapter.ViewHolder>() {
            .setVisibleRangePercent(70)
            .dwellSeconds(10)
 
+
         ImpressionManager()
-            .with(holder.itemView)
+            .with(holder.itemView,lifecycle)
             .impressionRequest(impressionRequest)
             .apply()
 

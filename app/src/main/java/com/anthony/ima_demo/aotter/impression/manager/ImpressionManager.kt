@@ -3,6 +3,8 @@ package com.anthony.ima_demo.aotter.impression.manager
 import android.content.Context
 import android.view.View
 import androidx.annotation.Nullable
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
 import com.anthony.ima_demo.aotter.impression.ImpressionProvider
 
 
@@ -19,13 +21,15 @@ class ImpressionManager {
     private lateinit var context: Context
 
 
-    fun with(@Nullable view: View): ImpressionProvider {
+    fun with(@Nullable view: View,lifecycle: Lifecycle): ImpressionProvider {
 
         context = view.context
 
-        return ImpressionProvider(view)
+        return ImpressionProvider(view,lifecycle)
 
     }
+
+
 
 
 }
