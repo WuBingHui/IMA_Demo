@@ -2,6 +2,15 @@ package com.anthony.ima_demo.aotter.impression
 
 import androidx.annotation.IntRange
 
+
+/**
+ * 2020/06/08 created by Anthony Wu
+ * 曝光參數提供者
+ * 該類提供開發者設置客製化的顯示百分比與停留時間
+ * 可以針對 showVisibleRangePercent 與 stopVisibleRangeSeconds  預設為 50% 與 5秒
+ * 兩個參數決定 view 要顯示多少百分比在屏幕上才開始計算曝光，曝光的成立可由
+ * stopVisibleRangeSeconds參數決定計算時長
+ */
 class ImpressionRequester {
 
     var showVisibleRangePercent = 50
