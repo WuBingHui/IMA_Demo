@@ -1,4 +1,4 @@
-package com.anthony.ima_demo.aotter.impression
+package com.anthony.ima_demo.aotter.impression.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

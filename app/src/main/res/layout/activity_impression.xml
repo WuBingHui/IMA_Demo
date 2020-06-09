@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".aotter.impression.ImpressionActivity">
+    tools:context=".aotter.impression.view.ImpressionActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/impressionRecyclerView"

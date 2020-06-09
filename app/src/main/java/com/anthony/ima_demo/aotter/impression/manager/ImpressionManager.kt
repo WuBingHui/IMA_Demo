@@ -1,12 +1,9 @@
 package com.anthony.ima_demo.aotter.impression.manager
 
 import android.content.Context
-import android.graphics.Rect
-import android.util.Log
 import android.view.View
 import androidx.annotation.Nullable
-import com.anthony.ima_demo.aotter.impression.ImpressionRequester
-import com.anthony.ima_demo.aotter.impression.ViewVisibilityPercentageCalculator
+import com.anthony.ima_demo.aotter.impression.ImpressionProvider
 
 
 /**
@@ -18,48 +15,18 @@ import com.anthony.ima_demo.aotter.impression.ViewVisibilityPercentageCalculator
  */
 class ImpressionManager {
 
-    private lateinit var impressionRequester: ImpressionRequester
-
-    private var viewVisibilityPercentageCalculator: ViewVisibilityPercentageCalculator =
-        ViewVisibilityPercentageCalculator()
 
     private lateinit var context: Context
 
-    private lateinit var view:View
 
-    fun with(@Nullable view: View): ImpressionManager {
+    fun with(@Nullable view: View): ImpressionProvider {
 
         context = view.context
 
-        this.view = view
-
-        return this
+        return ImpressionProvider(view)
 
     }
 
-    fun impressionRequester(@Nullable impressionRequester: ImpressionRequester): ImpressionManager {
-
-        this.impressionRequester = impressionRequester
-
-        return this
-    }
-
-
-    fun apply(){
-
-
-        val rect =  Rect()
-
-        view.getLocalVisibleRect(rect)
-
-        view.viewTreeObserver.addOnScrollChangedListener  {
-
-            Log.e("view","${view.tag}-${viewVisibilityPercentageCalculator.getVisibilityPercents(view)}%")
-
-        }
-
-
-    }
 
 }
 

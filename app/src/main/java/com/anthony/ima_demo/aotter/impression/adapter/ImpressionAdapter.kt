@@ -1,14 +1,14 @@
 package com.anthony.ima_demo.aotter.impression.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.anthony.ima_demo.R
-import com.anthony.ima_demo.aotter.impression.ImpressionRequester
+import com.anthony.ima_demo.aotter.impression.ImpressionProvider
 import com.anthony.ima_demo.aotter.impression.manager.ImpressionManager
+import com.anthony.ima_demo.aotter.impression.view.ImpressionRequest
 
 class ImpressionAdapter : RecyclerView.Adapter<ImpressionAdapter.ViewHolder>() {
 
@@ -40,18 +40,17 @@ class ImpressionAdapter : RecyclerView.Adapter<ImpressionAdapter.ViewHolder>() {
 
         holder.bind(impressionList[position])
 
-        val impressionRequester =
-            ImpressionRequester()
-                .setVisibleRangePercent(80)
-                .setStopVisibleRangeSeconds(5)
 
         holder.itemView.tag = position
 
+       val impressionRequest =  ImpressionRequest()
+           .setVisibleRangePercent(60)
+           .dwellSeconds(10)
+
         ImpressionManager()
             .with(holder.itemView)
-            .impressionRequester(impressionRequester)
+            .impressionRequest(impressionRequest)
             .apply()
-
 
     }
 
