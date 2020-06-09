@@ -44,7 +44,7 @@ class ImpressionAdapter : RecyclerView.Adapter<ImpressionAdapter.ViewHolder>() {
         holder.itemView.tag = position
 
        val impressionRequest =  ImpressionRequest()
-           .setVisibleRangePercent(60)
+           .setVisibleRangePercent(70)
            .dwellSeconds(10)
 
         ImpressionManager()

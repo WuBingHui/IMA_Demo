@@ -4,8 +4,8 @@ import android.graphics.Rect
 import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
-import androidx.annotation.IntRange
 import androidx.annotation.Nullable
+import com.anthony.ima_demo.aotter.impression.view.ImpressionCountDownTimer
 import com.anthony.ima_demo.aotter.impression.view.ImpressionRequest
 
 
@@ -20,9 +20,13 @@ class ImpressionProvider(private val view: View) {
 
     private var impressionRequest = ImpressionRequest()
 
+    private var impressionCountDownTimer: ImpressionCountDownTimer = ImpressionCountDownTimer(impressionRequest)
+
     fun impressionRequest(@Nullable impressionRequest: ImpressionRequest): ImpressionProvider {
 
         this.impressionRequest = impressionRequest
+
+        impressionCountDownTimer = ImpressionCountDownTimer(this.impressionRequest)
 
         return this
     }
@@ -43,6 +47,7 @@ class ImpressionProvider(private val view: View) {
 
         override fun onViewAttachedToWindow(v: View?) {
             Log.e("view", "view 出現在螢幕上")
+
             val rect = Rect()
 
             view.getLocalVisibleRect(rect)
@@ -54,8 +59,12 @@ class ImpressionProvider(private val view: View) {
 
     private val onScrollChangedListener = ViewTreeObserver.OnScrollChangedListener {
 
-        Log.e("Scroll","${view.tag}-${viewVisibilityPercentageCalculator.getVisibilityPercents(view)}%")
+        val percents = viewVisibilityPercentageCalculator.getVisibilityPercents(view)
 
+        impressionCountDownTimer.checkPercent(percents)
+
+        Log.e("Scroll", "${view.tag}-${percents}%")
     }
+
 
 }

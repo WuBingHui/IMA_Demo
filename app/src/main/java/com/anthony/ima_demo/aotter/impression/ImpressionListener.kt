@@ -5,8 +5,10 @@ package com.anthony.ima_demo.aotter.impression
 
 interface ImpressionListener {
 
-    fun onSuccess()
+    fun onImpressionSuccess()
 
-    fun onFail()
+    fun onImpressionFail()
+
+    fun currentImpressionPercent(percent:Int)
 
 }
