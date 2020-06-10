@@ -33,15 +33,15 @@ class ImpressionActivity : AppCompatActivity() {
 
         val list = mutableListOf<String>()
 
-        list.add("123213")
+        list.add("asdsadsa")
         list.add("adasdsa")
-        list.add("vfdffff")
+        list.add("dsadsaasd")
         list.add("343254")
-        list.add("hgfhfg")
+        list.add("AD")
         list.add("dsadasdad")
-        list.add("dasdsa")
+        list.add("AD")
         list.add("gfgdfgfd")
-        list.add("ereeee")
+        list.add("AD")
         list.add("qqqqqq")
 
         impressionAdapter?.update(list)

@@ -45,27 +45,22 @@ class ImpressionAdapter(private val lifecycle: Lifecycle) : RecyclerView.Adapter
 
         holder.itemView.tag = position
 
-       val impressionRequest =  ImpressionRequest()
-           .setVisibleRangePercent(70)
-           .dwellSeconds(10)
-
-        ImpressionManager()
-            .with(holder.itemView,lifecycle)
-            .impressionRequest(impressionRequest)
-            .impressionListener(impressionListener)
-            .apply()
 
     }
 
     private val impressionListener = object :ImpressionListener{
         override fun onImpressionSuccess() {
 
-            Log.e("onImpressionSuccess","onImpressionSuccess")
+            Log.e("impressionListener","onImpressionSuccess")
 
         }
 
-        override fun onImpressionPercent(percent: Int) {
-            Log.e("ImpressionPercent",percent.toString())
+        override fun onViewAttachedToWindow() {
+            Log.e("impressionListener","onViewAttachedToWindow")
+        }
+
+        override fun onViewDetachedFromWindow() {
+            Log.e("impressionListener","onViewDetachedFromWindow")
         }
 
     }
@@ -77,6 +72,22 @@ class ImpressionAdapter(private val lifecycle: Lifecycle) : RecyclerView.Adapter
         fun bind(item: String) {
 
             textView.text = item
+
+
+            if(item == "AD"){
+
+                val impressionRequest =  ImpressionRequest()
+                    .setVisibleRangePercent(70)
+                    .dwellSeconds(10)
+
+                ImpressionManager()
+                    .with(itemView,lifecycle)
+                    .impressionRequest(impressionRequest)
+                    .impressionListener(impressionListener)
+                    .apply()
+            }
+
+
         }
 
     }

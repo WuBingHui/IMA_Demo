@@ -44,8 +44,11 @@ class ImpressionCountDownTimer(impressionRequest: ImpressionRequest,private val 
             }
 
             if (!isCountDown) {
+
                 isCountDown = true
+
                 countDownTimer?.start()
+
             }
 
         } else {

@@ -13,6 +13,12 @@ import androidx.lifecycle.OnLifecycleEvent
 /**
  * 2020/06/08 created by Anthony Wu
  * 曝光提供者
+ * 這裡會接收到 view 與 lifecycle
+ * 會依照職責配發任務下去給其他類，如下
+ * ImpressionListener 負責曝光的回調監聽
+ * ViewVisibilityPercentageCalculator 負責計算可見百分比
+ * ImpressionRequest 客製化的百分比參數與停留時間
+ * ImpressionCountDownTimer 曝光計時器
  */
 class ImpressionProvider(private val view: View, lifecycle: Lifecycle) : LifecycleObserver {
 
@@ -64,6 +70,8 @@ class ImpressionProvider(private val view: View, lifecycle: Lifecycle) : Lifecyc
 
             lifecycle.removeObserver(this@ImpressionProvider)
 
+            impressionListener?.onViewDetachedFromWindow()
+
         }
 
         override fun onViewAttachedToWindow(v: View?) {
@@ -77,6 +85,8 @@ class ImpressionProvider(private val view: View, lifecycle: Lifecycle) : Lifecyc
 
             lifecycle.addObserver(this@ImpressionProvider)
 
+            impressionListener?.onViewAttachedToWindow()
+
         }
     }
 
@@ -86,8 +96,6 @@ class ImpressionProvider(private val view: View, lifecycle: Lifecycle) : Lifecyc
         val percents = viewVisibilityPercentageCalculator.getVisibilityPercents(view)
 
         impressionCountDownTimer.checkPercent(percents)
-
-        impressionListener?.onImpressionPercent(percents)
 
         Log.e("Scroll", "${view.tag}-${percents}%")
     }

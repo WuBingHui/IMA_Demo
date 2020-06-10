@@ -7,6 +7,8 @@ interface ImpressionListener {
 
     fun onImpressionSuccess()
 
-    fun onImpressionPercent(percent:Int)
+    fun onViewAttachedToWindow()
+
+    fun onViewDetachedFromWindow()
 
 }
